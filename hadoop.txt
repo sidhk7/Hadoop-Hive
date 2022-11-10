@@ -1,0 +1,17 @@
+hive;
+
+create database hadoop;
+
+use hadoop;
+
+create table movies (movieId int, title char(100),genres array <string>,ratings struct <imdbID: int,tmdbId:int>) row format delimited fields terminated by ',' collection items terminated by '|' lines terminated by '\n';
+
+hadoop fs -put  movie_ratings_new.csv movie_ratings_new.csv 
+
+load data inpath 'movie_ratings_new.csv' into table movies;
+
+select * from movies;
+
+select title,genres[0] from movies;
+
+select title,ratings.imdbId from movies;
